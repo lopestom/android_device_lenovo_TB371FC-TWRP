@@ -10,6 +10,10 @@ DEVICE_PATH := device/lenovo/TB371FC
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
 
+# Build Hack
+BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+
 # A/B
 AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
@@ -111,8 +115,8 @@ TARGET_USERIMAGES_USE_F2FS := true
 TARGET_RECOVERY_DEVICE_MODULES += \
     libion \
     libxml2 \
-	vendor.display.config@1.0 \
-	vendor.display.config@2.0
+    vendor.display.config@1.0 \
+    vendor.display.config@2.0
 
 # Security patch level
 VENDOR_SECURITY_PATCH := 2021-08-01
@@ -151,4 +155,16 @@ TARGET_USES_LOGD := true
 TW_CRYPTO_SYSTEM_VOLD_DEBUG := true
 TWRP_INCLUDE_LOGCAT := true
 
-TW_LOAD_VENDOR_MODULES := "lcd.ko msm_drm.ko"
+#TW_LOAD_VENDOR_MODULES := "lcd.ko msm_drm.ko"
+TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
+TW_LOAD_VENDOR_BOOT_MODULES := true
+TW_LOAD_PREBUILT_MODULES := true
+TW_USES_VENDOR_LIBS := true
+
+# Attempt to fix display screen
+# EGL settings
+USE_OPENGL_RENDERER := true
+BOARD_USE_FRAMEBUFFER_ALPHA_CHANNEL := true
+TARGET_DISABLE_TRIPLE_BUFFERING := false
+BOARD_CUSTOM_GRAPHICS := ../../../device/lenovo/TB371FC/graphics.drm.cpp
+#RECOVERY_GRAPHICS_USE_LINELENGTH := true
